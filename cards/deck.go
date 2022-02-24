@@ -9,22 +9,22 @@ type Deck []string
 
 func newDeck() Deck {
 	d := Deck{}
-	suits := []string{"Spade", "Heart", "Diamond", "Club"}
+	suits := []string{"Spades", "Hearts", "Diamonds", "Clubs"}
 
-	for s := 1; s < len(suits); s++ {
-		for c := 1; c < 13; c++ {
+	for s := 0; s < len(suits); s++ {
+		for c := 0; c < 13; c++ {
 			var cardNum string
 			switch c {
-			case 1:
+			case 0:
 				cardNum = "Ace"
-			case 11:
+			case 10:
 				cardNum = "Jack"
-			case 12:
+			case 11:
 				cardNum = "Queen"
-			case 13:
+			case 12:
 				cardNum = "King"
 			default:
-				cardNum = strconv.Itoa(c)
+				cardNum = strconv.Itoa(c + 1)
 			}
 
 			cardName := cardNum + " of " + suits[s]
@@ -34,10 +34,12 @@ func newDeck() Deck {
 	return d
 }
 
-func (d Deck) deal(handSize int) []string {
-	return d[:handSize]
+func (d Deck) deal(handSize int) Deck {
+	hand := d[:handSize]
+	d = d[handSize:]
+	return hand
 }
 
-func (d Deck) print() {
-	fmt.Printf("Deck cards:\n %q", d)
+func (d Deck) print(label string) {
+	fmt.Printf("\n%s (%d):\n %q", label, len(d), d)
 }
